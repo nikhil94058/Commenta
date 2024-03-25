@@ -8,7 +8,7 @@ export const Hero = () => {
           <div className="text-white text-[72px] font-normal font-['Manrope'] capitalize ml-[125px] mt-[300px]">Welcome To Commenta !</div>
           <div className="text-white text-[36px] font-normal font-['Manrope'] capitalize ml-[500px] mt-[20px]"> -- Wecome To the World of Commentry -- </div>
           <div className="text-white text-[18px] font-normal font-['Manrope'] capitalize ml-[500px] mt-[20px]">We are Doing great and bala</div>
-          <div className='flex'> <a href="/"><div className=" ml-[500px] mt-[20px] box-border h-[58px] w-[250px] p-4 border-4 flex"><a className='text-white'>Want to Comment</a>
+          <div className='flex'> <a href="/"><div className=" ml-[500px] mt-[20px] box-border h-[58px] w-[250px] p-4 border-4 flex"><a className='text-white' href='/login'>Want to Comment</a>
             <img src="/res/arrow.svg" className='w-[45px] h-[45px] mb-9' alt="" />
           </div></a>
             <a href="" className='text-white ml-[50px] mt-[40px]' >Explore Comments</a></div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from "react";
-
+import { auth } from '../firebase-config';
 import { db } from "../firebase-config";
 import {
   collection,
@@ -13,22 +13,33 @@ import {
 import { Navbar } from "./Navbar";
 import { Hero } from './Hero';
 import { Footer } from './Footer';
+import LeaderBoard from './LeaderBoard';
 
 export function HomePage() {
   const [loading, setLoading] = useState(true);
   const [comment, setComment] = useState("");
   const [users, setUsers] = useState([]);
+  const [like, setLike] = useState(1);
   const usersCollectionRef = collection(db, "users");
-
+  const currDate = new Date().toLocaleDateString;
   const PostComment = async () => {
-    if (comment === "" || comment.length < 50) {
+    if (comment === "" || comment.length < 50 || comment.length > 500) {
       alert("Plz Enter Shyari's And Good Comment only!");
     }
     else {
-      await addDoc(usersCollectionRef, { name: comment });
+      await addDoc(usersCollectionRef, { comments: comment, likes: like });
       alert("Please Refresh The Page");
       setComment("");
     }
+  };
+
+  const LikeFun = (cnt, id) => {
+    cnt = cnt + 1;
+    console.log(cnt);
+
+    const updateData = doc(db, "users", id)
+    updateDoc(updateData, { likes: cnt })
+    setLike(1)
   };
 
   useEffect(() => {
@@ -64,8 +75,8 @@ export function HomePage() {
 
         <Navbar />
         <Hero />
-        <center className='m-[300px]'>
-
+        <center className='mt-[300px]'>
+          <LeaderBoard />
           <input
             type="text"
             placeholder="Post Some Comments .... :)"
@@ -78,7 +89,10 @@ export function HomePage() {
           </button>
           {users.map((user, index) => (
             <div key={index} className="max-w-sm p-6 mt-4 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-              <p className="font-normal text-gray-700 dark:text-gray-400">{user.name}</p>
+              <p className="font-normal text-gray-700 dark:text-gray-400">{user.comments}</p>
+              <b>{user.mention}</b>
+              <div className='flex justify-end text-white'>{user.likes} __ <button onClick={() => LikeFun(user.likes, user.id)}>Upvote</button></div>
+              <div>{user.timeuploaded}</div>
             </div>
           ))}
         </center>
